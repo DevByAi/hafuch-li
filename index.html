@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>הפוך-לי</title>
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0iIzRDQUY1MCIvPjxwYXRoIGQ9Ik0zNSA2MCBMNDUgMzAgTDU1IDYwIE0zOCA1MCBMNTIgNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIvPjxwYXRoIGQ9Ik02NSAzNSBBMjAgMjAgMCAxIDEgNjUgNjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTY1IDMwIEw2NSA0MCBMNzUgMzUgWiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=">
+    <style>
+        :root {
+            --bg-color: #f5f5f5;
+            --container-bg: white;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --button-bg: #4CAF50;
+            --button-hover: #45a049;
+            --textarea-bg: white;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --container-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --border-color: #404040;
+            --button-bg: #2e7d32;
+            --button-hover: #1b5e20;
+            --textarea-bg: #3d3d3d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            background: var(--container-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            resize: vertical;
+            direction: rtl;
+            background-color: var(--textarea-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: var(--button-bg);
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            transform: scale(1.01);
+        }
+
+        button {
+            background-color: var(--button-bg);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .button-group {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--button-bg);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        h1:hover::after {
+            width: 150px;
+        }
+
+        .theme-switch {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-switch-input {
+            display: none;
+        }
+
+        .theme-switch-label {
+            cursor: pointer;
+            width: 50px;
+            height: 26px;
+            background-color: #83d8ff;
+            border-radius: 13px;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-switch-label::after {
+            content: '☀️';
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            position: absolute;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .theme-switch-input:checked + .theme-switch-label {
+            background-color: #365;
+        }
+
+        .theme-switch-input:checked + .theme-switch-label::after {
+            content: '🌙';
+            transform: translateX(24px);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="theme-switch">
+        <input type="checkbox" id="theme-switch" class="theme-switch-input">
+        <label for="theme-switch" class="theme-switch-label"></label>
+    </div>
+    
+    <div class="container">
+        <h1>הפוך-לי</h1>
+        <textarea id="input" placeholder="הכנס טקסט כאן..."></textarea>
+        <div class="button-group">
+            <button onclick="convertText()">המר</button>
+            <button onclick="copyText()">העתק</button>
+            <button onclick="clearText()">נקה</button>
+        </div>
+        <textarea id="output" placeholder="התוצאה תופיע כאן..." readonly></textarea>
+    </div>
+
+    <script>
+        // הוספת אפקט גלים לכפתורים
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                
+                const x = e.pageX - this.offsetLeft;
+                const y = e.pageY - this.offsetTop;
+                
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // מעבר בין מצבי תצוגה
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('change', () => {
+            if (themeSwitch.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        });
+
+        function reverseString(str) {
+            return str.split('').reverse().join('');
+        }
+
+        function detectLanguage(text) {
+            const hebrewPattern = /[\u0590-\u05FF]/;
+            const englishPattern = /[a-zA-Z]/;
+            
+            if (hebrewPattern.test(text)) return 'hebrew';
+            if (englishPattern.test(text)) return 'english';
+            return 'unknown';
+        }
+
+        function convertText() {
+            const input = document.getElementById('input').value;
+            const words = input.split(' ');
+            
+            const convertedWords = words.map(word => {
+                const lang = detectLanguage(word);
+                if (lang === 'hebrew') {
+                    const reversed = reverseString(word);
+                    const originalLang = detectLanguage(reversed);
+                    return originalLang === 'hebrew' ? reversed : word;
+                }
+                if (lang === 'english') {
+                    const dictionary = {
+                        'hello': 'שלום',
+                        'bye': 'להתראות',
+                    };
+                    return dictionary[word.toLowerCase()] || word;
+                }
+                return word;
+            });
+
+            document.getElementById('output').value = convertedWords.join(' ');
+        }
+
+        function copyText() {
+            const output = document.getElementById('output');
+            output.select();
+            document.execCommand('copy');
+            
+            // אנימציית העתקה
+            const originalText = output.style.background;
+            output.style.background = '#4CAF50';
+            output.style.color = 'white';
+            
+            setTimeout(() => {
+                output.style.background = originalText;
+                output.style.color = '';
+            }, 200);
+        }
+
+        function clearText() {
+            const input = document.getElementById('input');
+            const output = document.getElementById('output');
+            
+            // אנימציית ניקוי
+            input.style.transform = 'scale(0.95)';
+            output.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                input.value = '';
+                output.value = '';
+                input.style.transform = '';
+                output.style.transform = '';
+            }, 150);
+        }
+
+        document.getElementById('input').addEventListener('input', convertText);
+    </script>
+</body>
+</html>
