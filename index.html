@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>הפוך-לי</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0iIzRDQUY1MCIvPjxwYXRoIGQ9Ik0zNSA2MCBMNDUgMzAgTDU1IDYwIE0zOCA1MCBMNTIgNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIvPjxwYXRoIGQ9Ik02NSAzNSBBMjAgMjAgMCAxIDEgNjUgNjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTY1IDMwIEw2NSA0MCBMNzUgMzUgWiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=">
-<style>
+    <style>
         :root {
             --bg: #f5f5f5;
             --fg: #333;
@@ -13,6 +13,7 @@
             --primary-dark: #45a049;
             --border: #e0e0e0;
             --container: #fff;
+            --textarea-bg: #fff;
         }
 
         [data-theme="dark"] {
@@ -22,12 +23,14 @@
             --primary-dark: #1b5e20;
             --border: #404040;
             --container: #2d2d2d;
+            --textarea-bg: #3d3d3d;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -38,7 +41,7 @@
             margin: 0 auto;
             padding: 20px;
             min-height: 100vh;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -46,6 +49,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
         textarea, select {
@@ -54,10 +58,10 @@
             margin: 10px 0;
             border: 2px solid var(--border);
             border-radius: 5px;
-            background: var(--container);
+            background: var(--textarea-bg);
             color: var(--fg);
             font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
         }
 
         textarea {
@@ -80,7 +84,7 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
         }
 
         button:hover {
@@ -93,18 +97,21 @@
             gap: 10px;
             justify-content: center;
             margin: 15px 0;
+            flex-wrap: wrap;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 20px;
             color: var(--fg);
+            font-size: 2em;
         }
 
         .theme-switch {
             position: fixed;
             top: 20px;
             left: 20px;
+            z-index: 1000;
         }
 
         .theme-switch-input {
@@ -119,6 +126,8 @@
             border-radius: 13px;
             position: relative;
             display: block;
+            user-select: none;
+            transition: background-color 0.3s ease;
         }
 
         .theme-switch-label::after {
@@ -130,10 +139,11 @@
             border-radius: 50%;
             top: 3px;
             left: 3px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 12px;
         }
 
         .theme-switch-input:checked + .theme-switch-label {
@@ -148,18 +158,46 @@
         footer {
             text-align: center;
             margin-top: 20px;
+            color: var(--fg);
+            transition: color 0.3s ease;
         }
 
         footer a {
             color: var(--primary);
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 600px) {
-            body { padding: 10px; }
-            .container { margin-top: 40px; }
-            button { width: calc(33.33% - 7px); }
-            .theme-switch { top: 10px; }
+            body { 
+                padding: 10px; 
+            }
+            .container { 
+                margin-top: 40px; 
+            }
+            button { 
+                width: calc(33.33% - 7px);
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+            .theme-switch { 
+                top: 10px;
+                left: 10px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            textarea {
+                font-size: 14px;
+            }
+            select {
+                font-size: 14px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -174,7 +212,7 @@
         <textarea id="input" placeholder="הכנס טקסט כאן..."></textarea>
         
         <div class="button-group">
-            <select id="conversionType" onchange="convert()">
+            <select id="conversionType" onchange="convertText()">
                 <option value="heb-to-eng">עברית לאנגלית (מקלדת)</option>
                 <option value="eng-to-heb">אנגלית לעברית (מקלדת)</option>
                 <option value="heb-flip">היפוך אותיות בעברית</option>
@@ -183,9 +221,9 @@
         </div>
 
         <div class="button-group">
-            <button onclick="convert()">המר</button>
-            <button onclick="copy()">העתק</button>
-            <button onclick="clear()">נקה</button>
+            <button onclick="convertText()">המר</button>
+            <button onclick="copyText()">העתק</button>
+            <button onclick="clearText()">נקה</button>
         </div>
         
         <textarea id="output" placeholder="התוצאה תופיע כאן..." readonly></textarea>
@@ -205,9 +243,11 @@
             ',': '.', ';': ',', '\\': '\\', ' ': ' '
         };
 
-        const reverseMap = Object.fromEntries(Object.entries(keyboardMap).map(([k, v]) => [v, k]));
+        const reverseMap = Object.fromEntries(
+            Object.entries(keyboardMap).map(([k, v]) => [v, k])
+        );
 
-        function convert() {
+        function convertText() {
             const input = document.getElementById('input').value;
             const type = document.getElementById('conversionType').value;
             const output = document.getElementById('output');
@@ -232,22 +272,29 @@
             }
         }
 
-        function copy() {
+        function copyText() {
             const output = document.getElementById('output');
             output.select();
             document.execCommand('copy');
             
-            output.style.background = var(--primary);
+            // שמירת הצבע המקורי
+            const computedStyle = getComputedStyle(output);
+            const originalBg = computedStyle.backgroundColor;
+            const originalColor = computedStyle.color;
+            
+            // אנימציית העתקה
+            output.style.backgroundColor = '#4CAF50';
             output.style.color = 'white';
+            
             setTimeout(() => {
-                output.style.background = '';
-                output.style.color = '';
+                output.style.backgroundColor = originalBg;
+                output.style.color = originalColor;
             }, 200);
         }
 
-        function clear() {
-            ['input', 'output'].forEach(id => {
-                const el = document.getElementById(id);
+        function clearText() {
+            const elements = ['input', 'output'].map(id => document.getElementById(id));
+            elements.forEach(el => {
                 el.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     el.value = '';
@@ -256,23 +303,34 @@
             });
         }
 
-        // מעבר בין מצבי תצוגה
+        // ניהול מצב תצוגה
         const themeSwitch = document.getElementById('theme-switch');
-        themeSwitch.addEventListener('change', () => {
-            document.documentElement.setAttribute('data-theme', 
-                themeSwitch.checked ? 'dark' : 'light');
-            localStorage.setItem('theme', 
-                themeSwitch.checked ? 'dark' : 'light');
-        });
-
-        // טעינת מצב תצוגה שמור
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            themeSwitch.checked = true;
+        
+        function setTheme(isDark) {
+            if (isDark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
         }
 
+        // טעינה ראשונית של מצב התצוגה
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && 
+             window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeSwitch.checked = true;
+            setTheme(true);
+        }
+
+        // מעבר בין מצבי תצוגה
+        themeSwitch.addEventListener('change', () => {
+            setTheme(themeSwitch.checked);
+        });
+
         // המרה אוטומטית בזמן הקלדה
-        document.getElementById('input').addEventListener('input', convert);
+        document.getElementById('input').addEventListener('input', convertText);
     </script>
 </body>
 </html>
