@@ -2,134 +2,109 @@
 <html dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>הפוך-לי</title>
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0iIzRDQUY1MCIvPjxwYXRoIGQ9Ik0zNSA2MCBMNDUgMzAgTDU1IDYwIE0zOCA1MCBMNTIgNTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIvPjxwYXRoIGQ9Ik02NSAzNSBBMjAgMjAgMCAxIDEgNjUgNjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTY1IDMwIEw2NSA0MCBMNzUgMzUgWiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=">
-    <style>
+<style>
         :root {
-            --bg-color: #f5f5f5;
-            --container-bg: white;
-            --text-color: #333;
-            --border-color: #e0e0e0;
-            --button-bg: #4CAF50;
-            --button-hover: #45a049;
-            --textarea-bg: white;
+            --bg: #f5f5f5;
+            --fg: #333;
+            --primary: #4CAF50;
+            --primary-dark: #45a049;
+            --border: #e0e0e0;
+            --container: #fff;
         }
 
         [data-theme="dark"] {
-            --bg-color: #1a1a1a;
-            --container-bg: #2d2d2d;
-            --text-color: #ffffff;
-            --border-color: #404040;
-            --button-bg: #2e7d32;
-            --button-hover: #1b5e20;
-            --textarea-bg: #3d3d3d;
+            --bg: #1a1a1a;
+            --fg: #fff;
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --border: #404040;
+            --container: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: var(--bg-color);
-            transition: background-color 0.3s ease;
+            min-height: 100vh;
+            transition: background-color 0.3s;
         }
 
         .container {
-            background: var(--container-bg);
+            background: var(--container);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            animation: fadeIn 0.5s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid var(--border);
+            border-radius: 5px;
+            background: var(--container);
+            color: var(--fg);
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         textarea {
-            width: 100%;
             height: 150px;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid var(--border-color);
-            border-radius: 5px;
-            font-size: 16px;
             resize: vertical;
             direction: rtl;
-            background-color: var(--textarea-bg);
-            color: var(--text-color);
-            transition: all 0.3s ease;
         }
 
-        textarea:focus {
-            border-color: var(--button-bg);
+        textarea:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
             box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-            transform: scale(1.01);
         }
 
         button {
-            background-color: var(--button-bg);
+            background: var(--primary);
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
-            margin: 5px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         button:hover {
-            background-color: var(--button-hover);
+            background: var(--primary-dark);
             transform: translateY(-2px);
         }
 
-        button:active {
-            transform: translateY(1px);
-        }
-
         .button-group {
-            margin: 10px 0;
             display: flex;
             gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
         }
 
         h1 {
-            color: var(--text-color);
             text-align: center;
             margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 3px;
-            background-color: var(--button-bg);
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: width 0.3s ease;
-        }
-
-        h1:hover::after {
-            width: 150px;
+            color: var(--fg);
         }
 
         .theme-switch {
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .theme-switch-input {
@@ -140,30 +115,29 @@
             cursor: pointer;
             width: 50px;
             height: 26px;
-            background-color: #83d8ff;
+            background: #83d8ff;
             border-radius: 13px;
             position: relative;
-            transition: background-color 0.3s ease;
+            display: block;
         }
 
         .theme-switch-label::after {
             content: '☀️';
             width: 20px;
             height: 20px;
-            background-color: white;
+            background: white;
             position: absolute;
             border-radius: 50%;
             top: 3px;
             left: 3px;
-            transition: all 0.3s ease;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
         }
 
         .theme-switch-input:checked + .theme-switch-label {
-            background-color: #365;
+            background: #365;
         }
 
         .theme-switch-input:checked + .theme-switch-label::after {
@@ -171,29 +145,21 @@
             transform: translateX(24px);
         }
 
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.7);
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            pointer-events: none;
+        footer {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        
         footer a {
+            color: var(--primary);
             text-decoration: none;
-            color: var(--button-bg);
         }
 
-        footer a:hover {
-            text-decoration: underline;
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { margin-top: 40px; }
+            button { width: calc(33.33% - 7px); }
+            .theme-switch { top: 10px; }
         }
     </style>
 </head>
@@ -206,129 +172,107 @@
     <div class="container">
         <h1>הפוך-לי</h1>
         <textarea id="input" placeholder="הכנס טקסט כאן..."></textarea>
+        
         <div class="button-group">
-            <button onclick="convertText()">המר</button>
-            <button onclick="copyText()">העתק</button>
-            <button onclick="clearText()">נקה</button>
+            <select id="conversionType" onchange="convert()">
+                <option value="heb-to-eng">עברית לאנגלית (מקלדת)</option>
+                <option value="eng-to-heb">אנגלית לעברית (מקלדת)</option>
+                <option value="heb-flip">היפוך אותיות בעברית</option>
+                <option value="eng-flip">היפוך אותיות באנגלית</option>
+            </select>
         </div>
+
+        <div class="button-group">
+            <button onclick="convert()">המר</button>
+            <button onclick="copy()">העתק</button>
+            <button onclick="clear()">נקה</button>
+        </div>
+        
         <textarea id="output" placeholder="התוצאה תופיע כאן..." readonly></textarea>
 
-        <footer style="text-align: center; margin-top: 20px; padding: 10px; color: var(--text-color);">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
-                <span>נוצר על ידי</span>
-                <a href="https://github.com/Davidtam561" style="color: var(--button-bg); text-decoration: none;">דוד</a>
-                <a href="https://github.com/Davidtam561/text-flip-web" style="color: var(--text-color);">
-                    <svg height="24" width="24" viewBox="0 0 16 16">
-                        <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-                    </svg>
-                </a>
-            </div>
-            <div style="font-size: 0.9em; margin-top: 5px;">בהשראת תוכנת "הפוך על הפוך"</div>
+        <footer>
+            <a href="https://github.com/Davidtam561">נוצר על ידי דוד</a>
         </footer>
     </div>
 
     <script>
-        // הוספת אפקט גלים לכפתורים
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                this.appendChild(ripple);
-                
-                const x = e.pageX - this.offsetLeft;
-                const y = e.pageY - this.offsetTop;
-                
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
+        const keyboardMap = {
+            'ש': 'a', 'נ': 'b', 'ב': 'c', 'ג': 'd', 'ק': 'e', 'כ': 'f',
+            'ע': 'g', 'י': 'h', 'ן': 'i', 'ח': 'j', 'ל': 'k', 'ך': 'l',
+            'צ': 'm', 'מ': 'n', 'ם': 'o', 'פ': 'p', '/': 'q', 'ר': 'r',
+            'ד': 's', 'א': 't', 'ו': 'u', 'ה': 'v', "'": 'w', 'ס': 'x',
+            'ט': 'y', 'ז': 'z', 'ף': ']', ']': '[', '[': ';', '.': '/',
+            ',': '.', ';': ',', '\\': '\\', ' ': ' '
+        };
 
-        // מעבר בין מצבי תצוגה
-        const themeSwitch = document.getElementById('theme-switch');
-        themeSwitch.addEventListener('change', () => {
-            if (themeSwitch.checked) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-            }
-        });
+        const reverseMap = Object.fromEntries(Object.entries(keyboardMap).map(([k, v]) => [v, k]));
 
-        function reverseString(str) {
-            return str.split('').reverse().join('');
-        }
-
-        function detectLanguage(text) {
-            const hebrewPattern = /[\u0590-\u05FF]/;
-            const englishPattern = /[a-zA-Z]/;
-            
-            if (hebrewPattern.test(text)) return 'hebrew';
-            if (englishPattern.test(text)) return 'english';
-            return 'unknown';
-        }
-
-        function convertText() {
+        function convert() {
             const input = document.getElementById('input').value;
-            const words = input.split(' ');
-            
-            const convertedWords = words.map(word => {
-                const lang = detectLanguage(word);
-                if (lang === 'hebrew') {
-                    const reversed = reverseString(word);
-                    const originalLang = detectLanguage(reversed);
-                    return originalLang === 'hebrew' ? reversed : word;
-                }
-                if (lang === 'english') {
-                    const dictionary = {
-                        'hello': 'שלום',
-                        'bye': 'להתראות',
-                    };
-                    return dictionary[word.toLowerCase()] || word;
-                }
-                return word;
-            });
+            const type = document.getElementById('conversionType').value;
+            const output = document.getElementById('output');
 
-            document.getElementById('output').value = convertedWords.join(' ');
+            switch(type) {
+                case 'heb-to-eng':
+                    output.value = [...input].map(c => keyboardMap[c] || c).join('');
+                    break;
+                case 'eng-to-heb':
+                    output.value = [...input].map(c => reverseMap[c.toLowerCase()] || c).join('');
+                    break;
+                case 'heb-flip':
+                    output.value = input.split(' ')
+                        .map(w => /[\u0590-\u05FF]/.test(w) ? [...w].reverse().join('') : w)
+                        .join(' ');
+                    break;
+                case 'eng-flip':
+                    output.value = input.split(' ')
+                        .map(w => /[a-zA-Z]/.test(w) ? [...w].reverse().join('') : w)
+                        .join(' ');
+                    break;
+            }
         }
 
-        function copyText() {
+        function copy() {
             const output = document.getElementById('output');
             output.select();
             document.execCommand('copy');
             
-            // אנימציית העתקה
-            const originalBg = output.style.background;
-            const originalColor = output.style.color;
-            output.style.background = '#4CAF50';
+            output.style.background = var(--primary);
             output.style.color = 'white';
-            
             setTimeout(() => {
-                output.style.background = originalBg;
-                output.style.color = originalColor;
+                output.style.background = '';
+                output.style.color = '';
             }, 200);
         }
 
-        function clearText() {
-            const input = document.getElementById('input');
-            const output = document.getElementById('output');
-            
-            // אנימציית ניקוי
-            input.style.transform = 'scale(0.95)';
-            output.style.transform = 'scale(0.95)';
-            
-            setTimeout(() => {
-                input.value = '';
-                output.value = '';
-                input.style.transform = '';
-                output.style.transform = '';
-            }, 150);
+        function clear() {
+            ['input', 'output'].forEach(id => {
+                const el = document.getElementById(id);
+                el.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    el.value = '';
+                    el.style.transform = '';
+                }, 150);
+            });
+        }
+
+        // מעבר בין מצבי תצוגה
+        const themeSwitch = document.getElementById('theme-switch');
+        themeSwitch.addEventListener('change', () => {
+            document.documentElement.setAttribute('data-theme', 
+                themeSwitch.checked ? 'dark' : 'light');
+            localStorage.setItem('theme', 
+                themeSwitch.checked ? 'dark' : 'light');
+        });
+
+        // טעינת מצב תצוגה שמור
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeSwitch.checked = true;
         }
 
         // המרה אוטומטית בזמן הקלדה
-        document.getElementById('input').addEventListener('input', convertText);
+        document.getElementById('input').addEventListener('input', convert);
     </script>
 </body>
 </html>
