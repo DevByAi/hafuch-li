@@ -15,7 +15,7 @@
 ## שימוש
 פשוט היכנסו לאתר והתחילו להקליד!
 
-https://davidtam561.github.io/hafuch-li/
+https://DevByAi.github.io/hafuch-li/
 
 
 ֿ
