@@ -58,7 +58,6 @@ function clearText() {
         }, 150);
     });
 }
-// ניהול מצב תצוגה
 const themeSwitch = document.getElementById('theme-switch');  
 function setTheme(isDark) {
     if (isDark) {
@@ -69,16 +68,14 @@ function setTheme(isDark) {
         localStorage.setItem('theme', 'light');
     }
 }
-// טעינה ראשונית של מצב התצוגה
 if (localStorage.getItem('theme') === 'dark' || 
     (!localStorage.getItem('theme') && 
      window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     themeSwitch.checked = true;
     setTheme(true);
 }
-// מעבר בין מצבי תצוגה
 themeSwitch.addEventListener('change', () => {
     setTheme(themeSwitch.checked);
 });
-// המרה אוטומטית בזמן הקלדה
+
 document.getElementById('input').addEventListener('input', convertText); 
